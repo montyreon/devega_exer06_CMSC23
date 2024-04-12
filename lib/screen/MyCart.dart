@@ -25,8 +25,9 @@ Widget build(BuildContext context) {
             onPressed: () { 
               context.read<ShoppingCart>().removeAll(); },
             child: const Text("Reset")),
-            ElevatedButton(         //this button redirect the user to checkout page once clicked
+            ElevatedButton(         
               onPressed:() {
+                // when the checkout button is pressed, navigate to the checkout page
                 Navigator.pushNamed(context, "/checkout");   
                 },
               child: const Text("Checkout")
@@ -47,6 +48,7 @@ Widget build(BuildContext context) {
 }
 
 Widget getItems(BuildContext context) { 
+  // holds the items in the cart, it also keeps track of changes in the cart
     List<Item> products = context.watch<ShoppingCart>().cart;
     String productname = "";
     return products.isEmpty

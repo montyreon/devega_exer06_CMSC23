@@ -3,8 +3,7 @@ import '../model/Item.dart';
 import "package:provider/provider.dart";
 import "../provider/shoppingcart_provider.dart";
 
-//this the widget has a list of the consumers selected items 
-//together with their prospective prices and the total amount in the shopping cart
+// checkout class for the checkout page
 class Checkout extends StatelessWidget{
   const Checkout({super.key});
 
@@ -20,6 +19,7 @@ class Checkout extends StatelessWidget{
           const Divider(height: 4, color: Colors.black),
           ElevatedButton(
             onPressed: (){
+              // check if cart is empty, if so, show a snackbar message
               if(context.read<ShoppingCart>().checker() == 1){
                 ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                   content: Text("Cart is Empty!!"),
@@ -29,6 +29,7 @@ class Checkout extends StatelessWidget{
                   ), 
                 ));
               }else{
+                // if cart is not empty, show a snackbar message and navigate to products page
               resetTotalCost();
               context.read<ShoppingCart>().removeAll();
               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -48,7 +49,7 @@ class Checkout extends StatelessWidget{
       )
     );
   }
-
+  // display the selected items in the cart
   Widget selectedItems(BuildContext context) { 
     List<Item> products = context.watch<ShoppingCart>().cart;
     String productname = "";
@@ -75,18 +76,20 @@ class Checkout extends StatelessWidget{
   }
 }
 
-Widget computeCost(){
+// a function to reset the total cost of the items in the cart
+Widget resetTotalCost(){
   return Consumer<ShoppingCart>(
     builder: (context, cart, child){
+     context.read<ShoppingCart>().removeAll();
       return Text("Total: ${cart.cartTotal}");
     }
   );
 }
 
-Widget resetTotalCost(){
+// a function to compute the total cost of the items in the cart
+Widget computeCost(){
   return Consumer<ShoppingCart>(
     builder: (context, cart, child){
-     context.read<ShoppingCart>().removeAll();
       return Text("Total: ${cart.cartTotal}");
     }
   );
